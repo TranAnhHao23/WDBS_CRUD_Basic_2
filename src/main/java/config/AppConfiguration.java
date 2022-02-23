@@ -1,7 +1,5 @@
-package cg.config;
+package config;
 
-import cg.service.ICategoryService;
-import cg.service.impl.CategoryServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -18,12 +16,10 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import cg.service.IProductService;
-import cg.service.impl.ProductServiceImpl;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("cg.controllers")
+@ComponentScan("controllers")
 @PropertySource("classpath:app.properties")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
@@ -41,7 +37,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return templateEngine;
     }
 
-
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -49,7 +44,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
-
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -62,15 +56,15 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return templateResolver;
     }
 
-    @Bean
-    public IProductService productService() {
-        return new ProductServiceImpl();
-    }
-
-    @Bean
-    public ICategoryService demoService() {
-        return new CategoryServiceImpl();
-    }
+//    @Bean
+//    public IProductService productService() {
+//        return new ProductServiceImpl();
+//    }
+//
+//    @Bean
+//    public ICategoryService demoService() {
+//        return new CategoryServiceImpl();
+//    }
 
     //upload-file
     @Value("${file-upload}")
@@ -80,7 +74,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/image/**")
                 .addResourceLocations("file:" + fileUpload);
-
     }
 
     @Bean(name = "multipartResolver")
